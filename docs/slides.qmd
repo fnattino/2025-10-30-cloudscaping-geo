@@ -1,0 +1,21 @@
+---
+title: An introduction to Zarr
+subtitle: ""
+format:
+  revealjs:
+    # theme: serif
+    slide-number: true
+    chalkboard:
+      buttons: false
+    preview-links: auto
+    footer: '[Cloudscaping Geo](https://www.geonovum.nl/agenda/cloudscaping-geo)'
+    transition: slide
+author:
+  - name: Francesco Nattino
+    email: f.nattino@esciencecenter.nl
+    affiliations: Netherlands eScience Center
+    orcid: 0000-0003-3286-0139
+date: 2025-10-30
+---
+
+## Resources
