@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "slides.html#what",
+    "href": "slides.html#what",
+    "title": "An introduction to Zarr",
+    "section": "What?",
+    "text": "What?\nOpen-source file format …\n\n… for chunked and compressed multi-dimensional arrays …\n\n\n… designed for large datasets, cloud-native."
+  },
+  {
+    "objectID": "slides.html#how",
+    "href": "slides.html#how",
+    "title": "An introduction to Zarr",
+    "section": "How?",
+    "text": "How?"
+  },
+  {
+    "objectID": "slides.html#cloud-native",
+    "href": "slides.html#cloud-native",
+    "title": "An introduction to Zarr",
+    "section": "Cloud-native",
+    "text": "Cloud-native\n\nConsolidated metadata: structural metadata in one read.\nChunked storage: read only the data you need.\nMultiple files: parallel read/write, scalable.\nNatively works with object storage."
+  },
+  {
+    "objectID": "slides.html#who-speaks-zarr",
+    "href": "slides.html#who-speaks-zarr",
+    "title": "An introduction to Zarr",
+    "section": "Who speaks Zarr?",
+    "text": "Who speaks Zarr?\nOpen-source specification, with implementations in:\n\nPython\nC++\nJavascript\nJulia\nRust\n…"
+  },
+  {
+    "objectID": "slides.html#zarr-is-popular",
+    "href": "slides.html#zarr-is-popular",
+    "title": "An introduction to Zarr",
+    "section": "Zarr is popular!",
+    "text": "Zarr is popular!\n\nOutside geospatial: bioimaging, electron microscopy.\nEarth system and climate models.\nEarth Observation:\n\nSentinel 1/2/3, via Copernicus Earth Observation Processing Framework (EOPF).\nLandsat archive, USGS EROS (explorative phase)."
+  },
+  {
+    "objectID": "slides.html#zarr-geo",
+    "href": "slides.html#zarr-geo",
+    "title": "An introduction to Zarr",
+    "section": "Zarr & Geo",
+    "text": "Zarr & Geo\n\nZarr (v2) is an OGC community standard.\nThe GeoZarr specification is under development.\nFor now, ad hoc choices made by implementations (e.g. CF metadata conventions used by Xarray)."
+  },
+  {
+    "objectID": "slides.html#zarr-vs-netcdfhdf5",
+    "href": "slides.html#zarr-vs-netcdfhdf5",
+    "title": "An introduction to Zarr",
+    "section": "Zarr vs NetCDF/HDF5",
+    "text": "Zarr vs NetCDF/HDF5\n\nBoth self-describing formats, hyerarchical groups.\nOne internally-tiled file (NetCDF) vs multiple files (Zarr).\nMetadata scattered through the file (NetCDF) vs consolidated (Zarr)."
+  },
+  {
+    "objectID": "slides.html#zarr-vs-cog",
+    "href": "slides.html#zarr-vs-cog",
+    "title": "An introduction to Zarr",
+    "section": "Zarr vs COG",
+    "text": "Zarr vs COG\n\nTargeting rasters (COG) vs n-dimensional arrays (Zarr).\nOne internally-tiled file (COG) vs multiple files (Zarr).\nDifferent metadata encoding, e.g. coordinates, and compressions.\nCOG has overviews - and plenty of tools and applications!\n\n\n\nBlog post: Is Zarr the new COG?"
+  },
+  {
+    "objectID": "slides.html#virtual-zarr",
+    "href": "slides.html#virtual-zarr",
+    "title": "An introduction to Zarr",
+    "section": "Virtual Zarr",
+    "text": "Virtual Zarr\n\nCreate virtual references to collection of archival files.\nZarr-like access to NetCDFs, TIFF, GRIB2, … without copying data.\nEnabled by kerchunk and VirtualiZarr."
+  },
+  {
+    "objectID": "slides.html#zarr-and-stac",
+    "href": "slides.html#zarr-and-stac",
+    "title": "An introduction to Zarr",
+    "section": "Zarr and STAC",
+    "text": "Zarr and STAC\n\nSTAC: index data with spatial and temporal dimensions.\nBoth STAC and Zarr are hyerarchical structures of metadata - partially overlapping goals.\nBut they serve different needs:\n\nSTAC: dataset discovery and access.\nZarr: filtering within a dataset.\n\nBest usage of Zarr + STAC depends on dataset.\n\n\n\nReport: Zarr + STAC"
+  },
+  {
+    "objectID": "slides.html#scenario-a-one-big-zarr",
+    "href": "slides.html#scenario-a-one-big-zarr",
+    "title": "An introduction to Zarr",
+    "section": "Scenario A: One big Zarr",
+    "text": "Scenario A: One big Zarr\n\nFor a few, large, and aligned data cubes:\n\none big Zarr;\none STAC collection per Zarr (collection-level asset).\n\nEasy dataset discovery, variables exposed via STAC, easy access.\nExample: Daily Daymet on Planetary Computer.\n\n\n\nReport: Zarr + STAC"
+  },
+  {
+    "objectID": "slides.html#scenario-b-many-smaller-zarr",
+    "href": "slides.html#scenario-b-many-smaller-zarr",
+    "title": "An introduction to Zarr",
+    "section": "Scenario B: Many smaller Zarr",
+    "text": "Scenario B: Many smaller Zarr\n\nMany, small, unaligned cubes (e.g. scenes in different CRS):\n\none Zarr per scene;\none STAC collection, one STAC item per Zarr.\n\nRelevant scenes discoverable via STAC.\nExample: EOPF Sentinel Zarr Samples Service."
+  },
+  {
+    "objectID": "slides.html#limitations-future",
+    "href": "slides.html#limitations-future",
+    "title": "An introduction to Zarr",
+    "section": "Limitations & Future",
+    "text": "Limitations & Future\n\nExploding number of files for large Zarr stores (solved by sharding in v3).\nAccess efficiency tied to chunk alignment (could be mitigated by coalesced chunk retrieval protocol).\nGeoZarr specification for interoperability and standardization."
+  },
+  {
+    "objectID": "slides.html#resources",
+    "href": "slides.html#resources",
+    "title": "An introduction to Zarr",
+    "section": "Resources",
+    "text": "Resources\n\nCloud-Optimized Geospatial Formats Guide: Zarr\nFundamentals: What Is Zarr? A Cloud-Native Format for Tensor Data\nZarr + STAC\nIs Zarr the new COG?"
+  }
+]
