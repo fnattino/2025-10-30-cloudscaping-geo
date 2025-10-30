@@ -1,6 +1,6 @@
 ---
 title: An introduction to Zarr
-subtitle: ""
+# subtitle:
 format:
   revealjs:
     # theme: serif
@@ -10,12 +10,134 @@ format:
     preview-links: auto
     footer: '[Cloudscaping Geo](https://www.geonovum.nl/agenda/cloudscaping-geo)'
     transition: slide
+    title-slide-attributes:
+      data-background-image: 'fig/zarr.png'
+      data-background-position: center
+      data-background-size: contain
+      data-background-opacity: 20%
 author:
   - name: Francesco Nattino
     email: f.nattino@esciencecenter.nl
-    affiliations: Netherlands eScience Center
+    affiliations: '[Netherlands eScience Center](https://www.esciencecenter.nl/)'
     orcid: 0000-0003-3286-0139
 date: 2025-10-30
 ---
 
+## What?
+
+**Open-source** file format ...
+
+. . .
+
+... for **chunked** and **compressed** multi-dimensional arrays ...
+
+. . .
+
+... designed for large datasets, **cloud-native**.
+
+## How?
+
+![](./fig/terminology-hierarchy.excalidraw.png){width=100%}
+
+## Cloud-native
+
+- **Consolidated metadata**: structural metadata in one read.
+- **Chunked storage**: read only the data you need.
+- **Multiple files**: parallel read/write, scalable.
+- Natively works with **object storage**.
+
+## Who speaks Zarr?
+
+Open-source [specification](https://zarr-specs.readthedocs.io/en/latest/specs.html), with implementations in:
+
+- Python
+- C++
+- Javascript
+- Julia
+- Rust
+- ...
+
+
+## Zarr is popular!
+
+- Outside geospatial: bioimaging, electron microscopy.
+- Earth system and climate models.
+- Earth Observation:
+  - **Sentinel 1/2/3**, via Copernicus [Earth Observation Processing Framework](https://zarr.eopf.copernicus.eu/) (EOPF).
+  - **Landsat** archive, USGS EROS (explorative phase).
+
+## Zarr & Geo
+
+- Zarr (v2) is an [OGC community standard](https://www.ogc.org/standards/zarr-storage-specification/).
+- The [GeoZarr specification](https://github.com/zarr-developers/geozarr-spec) is under development.
+- For now, *ad hoc* choices made by implementations (e.g. CF metadata conventions used by Xarray).
+
+## Zarr vs NetCDF/HDF5
+
+- Both self-describing formats, hyerarchical groups.
+- One internally-tiled file (NetCDF) vs multiple files (Zarr).
+- Metadata scattered through the file (NetCDF) vs consolidated (Zarr).
+
+## Zarr vs COG
+
+- Targeting rasters (COG) vs n-dimensional arrays (Zarr).
+- One internally-tiled file (COG) vs multiple files (Zarr).
+- Different metadata encoding, e.g. coordinates, and compressions.
+- COG has overviews - and plenty of tools and applications!
+
+:::::::::::::::::::::::::::::::::::::::::::::::::: aside
+Blog post: [Is Zarr the new COG?](https://element84.com/software-engineering/is-zarr-the-new-cog/)
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Virtual Zarr
+
+- Create virtual references to collection of archival files.
+- Zarr-like access to NetCDFs, TIFF, GRIB2, ... without copying data.
+- Enabled by [kerchunk](https://fsspec.github.io/kerchunk/) and [VirtualiZarr](https://virtualizarr.readthedocs.io).
+<!-- - Example: [Generate Virtual Zarr from CMIP6 NetCDF files](https://docs.openveda.cloud/user-guide/notebooks/veda-operations/generate-cmip6-virtual-zarr-historical.html). -->
+
+## Zarr and STAC
+
+- STAC: index data with spatial and temporal dimensions.
+- Both STAC and Zarr are hyerarchical structures of metadata - partially overlapping goals.
+- But they serve different needs:
+  - STAC: dataset discovery and access.
+  - Zarr: filtering within a dataset.
+- Best usage of Zarr + STAC depends on dataset.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::: aside
+Report: [Zarr + STAC](https://guide.cloudnativegeo.org/cookbooks/zarr-stac-report/)
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Scenario A: One big Zarr
+
+- For a few, large, and aligned data cubes:
+  - one big Zarr;
+  - one STAC collection per Zarr (collection-level asset).
+- Easy dataset discovery, variables exposed via STAC, easy access.
+- Example: [Daily Daymet](https://planetarycomputer.microsoft.com/dataset/daymet-daily-na) on Planetary Computer.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::: aside
+Report: [Zarr + STAC](https://guide.cloudnativegeo.org/cookbooks/zarr-stac-report/)
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Scenario B: Many smaller Zarr
+
+- Many, small, unaligned cubes (e.g. scenes in different CRS):
+  - one Zarr per scene;
+  - one STAC collection, one STAC item per Zarr.
+- Relevant scenes discoverable via STAC.
+- Example: [EOPF Sentinel Zarr Samples Service](https://stac.browser.user.eopf.eodc.eu).
+
+## Limitations & Future
+
+- Exploding number of files for large Zarr stores (solved by sharding in v3).
+- Access efficiency tied to chunk alignment (could be mitigated by [coalesced chunk retrieval protocol](https://ccrp.dev/)).
+- GeoZarr specification for interoperability and standardization.
+
 ## Resources
+
+- Cloud-Optimized Geospatial Formats Guide: [Zarr](https://guide.cloudnativegeo.org/zarr/intro.html)
+- [Fundamentals: What Is Zarr? A Cloud-Native Format for Tensor Data](https://earthmover.io/blog/what-is-zarr)
+- [Zarr + STAC](https://element84.com/software-engineering/zarr-stac/)
+- [Is Zarr the new COG?](https://element84.com/software-engineering/is-zarr-the-new-cog/)
