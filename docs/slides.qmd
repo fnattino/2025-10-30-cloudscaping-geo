@@ -57,6 +57,263 @@ Open-source [specification](https://zarr-specs.readthedocs.io/en/latest/specs.ht
 - Rust
 - ...
 
+## Zarr with Xarray - 1
+
+```python
+import dask.array as da
+import numpy as np
+import xarray as xr
+
+x = xr.DataArray(
+    name="temperature",
+    data=da.random.random((25, 512, 512), chunks=(25, 256, 256)),
+    coords={
+        "time": range(2000, 2025),
+        "lat": np.linspace(-90, 90, 512),
+        "lon": np.linspace(-180, 180, 512)
+    },
+    dims=("time", "lat", "lon"),
+)
+x.to_zarr("x.zarr", consolidated=True, zarr_format=3)
+```
+
+## Zarr with Xarray - 2
+
+```shell
+tree x.zarr
+```
+
+```output
+x.zarr
+├── lat
+│   ├── c
+│   │   └── 0
+│   └── zarr.json
+├── lon
+│   ├── c
+│   │   └── 0
+│   └── zarr.json
+├── temperature
+│   ├── c
+│   │   └── 0
+│   │       ├── 0
+│   │       │   ├── 0
+│   │       │   └── 1
+│   │       └── 1
+│   │           ├── 0
+│   │           └── 1
+│   └── zarr.json
+├── time
+│   ├── c
+│   │   └── 0
+│   └── zarr.json
+└── zarr.json
+
+12 directories, 12 files
+```
+
+## Zarr with Xarray - 3
+
+```shell
+cat x.zarr/zarr.json
+```
+
+```output
+{
+  "attributes": {},
+  "zarr_format": 3,
+  "consolidated_metadata": {
+    "kind": "inline",
+    "must_understand": false,
+    "metadata": {
+      "lat": {
+        "shape": [
+          512
+        ],
+        "data_type": "float64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              512
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "lat"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "lon": {
+        "shape": [
+          512
+        ],
+        "data_type": "float64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              512
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "temperature": {
+        "shape": [
+          25,
+          512,
+          512
+        ],
+        "data_type": "float64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              25,
+              256,
+              256
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "time": {
+        "shape": [
+          25
+        ],
+        "data_type": "int64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              25
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": 0,
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {},
+        "dimension_names": [
+          "time"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      }
+    }
+  },
+  "node_type": "group"
+```
 
 ## Zarr is popular!
 
